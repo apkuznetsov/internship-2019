@@ -29,7 +29,7 @@ namespace RealBlog.Controllers
             var posts = dbContext.Posts.
                 Where(
                 m => m.Text.Contains(search.SearchString) ||
-                m.Author.Username.Contains(search.SearchString)).ToList();
+                m.Author.Login.Contains(search.SearchString)).ToList();
 
             ViewBag.Posts = posts;
 

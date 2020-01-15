@@ -29,7 +29,7 @@ namespace RealBlog.Controllers
                     ModelState.AddModelError(string.Empty, "Пароли не совпадают");
 
                 var user = dbContext.Users.
-                    FirstOrDefault(u => u.Username == userToRegister.Username);
+                    FirstOrDefault(u => u.Login == userToRegister.Login);
 
                 if (user != null)
                     ModelState.AddModelError(string.Empty, "Пользователь с таким логином уже существует");
@@ -49,9 +49,9 @@ namespace RealBlog.Controllers
                 dbContext.Users.Add(userToRegister);
                 dbContext.SaveChanges();
 
-                FormsAuthentication.SetAuthCookie(userToRegister.Username, false);
+                FormsAuthentication.SetAuthCookie(userToRegister.Login, false);
                 Session["UserId"] = userToRegister.Id.ToString();
-                Session["UserNick"] = userToRegister.Username;
+                Session["UserNick"] = userToRegister.Login;
 
                 return RedirectToAction("Index", "Feed");
             }

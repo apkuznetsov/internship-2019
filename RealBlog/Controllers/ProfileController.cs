@@ -36,7 +36,7 @@ namespace RealBlog.Controllers
 
                 var user = dbContext.Users.
                     FirstOrDefault(
-                    u => u.Username == updatedUser.Username &&
+                    u => u.Login == updatedUser.Login &&
                     u.Id != updatedUser.Id);
 
                 if (user != null)

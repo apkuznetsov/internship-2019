@@ -34,15 +34,15 @@ namespace RealBlog.Controllers
             if (ModelState.IsValid)
             {
                 var user = dbContext.Users.FirstOrDefault(
-                    u => u.Username == login.Username &&
+                    u => u.Login == login.Login &&
                     u.Password == login.Password);
 
                 if (user != null)
                 {
-                    FormsAuthentication.SetAuthCookie(login.Username, login.RememberMe);
+                    FormsAuthentication.SetAuthCookie(login.Login, login.RememberMe);
 
                     Session["UserId"] = user.Id.ToString();
-                    Session["UserNick"] = user.Username;
+                    Session["UserNick"] = user.Login;
                     Session["UserPhotoUrl"] = user.PhotoUrl;
 
 
@@ -51,7 +51,7 @@ namespace RealBlog.Controllers
                         HttpCookie userInfo = new HttpCookie("UserInfo");
 
                         userInfo["UserId"] = user.Id.ToString();
-                        userInfo["UserNick"] = user.Username.ToString();
+                        userInfo["UserNick"] = user.Login.ToString();
 
                         if (user.PhotoUrl != null)
                             userInfo["UserPhotoUrl"] = user.PhotoUrl.ToString();
