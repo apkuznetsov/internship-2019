@@ -1,0 +1,95 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+input,
+select,
+textarea {
+    max-width: 265px;
+}
+
+.button-grey {
+    border-color: #aabacc;
+    color: #818283;
+    background-color: #dce4e9;
+}
+
+.tiny-panel {
+    margin: auto;
+    align-content: center;
+    width: 300px;
+    margin-top: 50px;
+}
+
+.grey-bar {
+    background-color: #c7d2d9;
+    border-color: #c7d2d9;
+}
+
+textarea {
+    resize: none;
+}
+
+.post-image {
+    width: auto;
+    height: auto;
+}
+
+.my-panel {
+    width: 600px;
+    margin: auto;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 150px;
+}
+
+.search-field {
+    margin-left: 100px;
+    box-shadow: inset 0 0 1px;
+    border-radius: 5px;
+}
+
+.width-500 {
+    width: 500px;
+}
+
+.width-350 {
+    width: 350px;
+}
+
+.width-150 {
+    width: 150px;
+}
+
+.margin-top-60 {
+    margin-top: 60px;
+    padding: 30px;
+}
+
+.left-part {
+    width: 30%;
+    overflow: auto;
+    float: left;
+}
+
+.right-part {
+    width: 70%;
+    overflow: auto;
+    margin-left: 20px;
+}
+
+.panel-heading {
+    margin: 0 0 0;
+}

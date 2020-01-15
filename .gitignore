@@ -272,3 +272,15 @@ __pycache__/
 # tools/
 
 # End of https://www.gitignore.io/api/aspnetcore
+
+*.map
+
+RealBlog/fonts/
+
+RealBlog/Content/bootstrap-theme.css
+RealBlog/Content/bootstrap-theme.min.css
+
+RealBlog/Content/bootstrap.css
+RealBlog/Content/bootstrap.min.css
+
+RealBlog/Scripts/
