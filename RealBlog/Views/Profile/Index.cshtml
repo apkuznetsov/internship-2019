@@ -1,0 +1,212 @@
+﻿@model RealBlog.Models.User
+@using RealBlog.Models
+
+@{
+    ViewBag.Title = "Профиль";
+}
+
+@if (Model.Id == Convert.ToInt32(Session["UserId"]))
+{
+    <div class="panel panel-info tiny-panel">
+
+        <div class="panel panel-heading">
+            Редактирование профиля
+        </div>
+
+        <div class="panel-body">
+
+            @using (Html.BeginForm("UpdateProfile", "Profile", FormMethod.Post, new { entype = "multipart/form-data" }))
+            {
+                <form>
+
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Login)
+                        @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control", title = "От 3 до 20 символов. Латиница, кириллица, цифры и подчёркивания" } })
+                        @Html.ValidationMessageFor(model => model.Login)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password)
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "Password", title = "От 6 до 30 символов. Латиница, цифры и подчёркивания" } })
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PasswordConfirm)
+                        @Html.EditorFor(model => model.PasswordConfirm, new { htmlAttributes = new { @class = "form-control", type = "Password" } })
+                        @Html.ValidationMessageFor(model => model.PasswordConfirm)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email)
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "example@example.com" } })
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PhotoUrl)
+                        <input name="imageData" type="file" accept="image/x-png, image/gif, image/jpeg, image/jpg" />
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FirstName)
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LastName)
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastName)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContactInfo)
+                        <br />
+                        @Html.TextAreaFor(model => model.ContactInfo, 4, 100, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ContactInfo)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BikeSpecifications)
+                        <br />
+                        @Html.TextAreaFor(model => model.BikeSpecifications, 4, 100, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.BikeSpecifications)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Hobbies)
+                        <br />
+                        @Html.TextAreaFor(model => model.Hobbies, 4, 100, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Hobbies)
+                    </div>
+
+                    <div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+
+                    <button type="submit" class="btn button-gray btn-block">Сохранить</button>
+
+                </form>
+            }
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="panel panel-info margin-top-60">
+
+        <div class="width-500">
+
+            <div class="left-part width-150">
+                <a href="@Url.Action("Index", "Profile", new { id = Model.Id}, null)">
+                    @if (Model.PhotoUrl != null)
+                    {
+                        <img class="avatar" src="@Url.Content(Model.PhotoUrl)" />
+                    }
+                    else
+                    {
+                        <img class="avatar" src="~/Content/Other/default.jpg" />
+                    }
+                </a>
+            </div>
+
+            <div class="right-part width-350">
+
+                <table>
+                    <tr colspan="2">
+                        <td>
+                            @Html.LabelFor(model => model.Login)
+                            @Model.Login
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.LastName)
+                            @Model.LastName
+                        </td>
+
+                        <td>
+                            @Html.LabelFor(model => model.FirstName)
+                            @Model.FirstName
+                        </td>
+                    </tr>
+
+                    <tr colspan="2">
+                        <td>
+                            @Html.LabelFor(model => model.ContactInfo)
+                            @Model.ContactInfo
+                        </td>
+                    </tr>
+
+                    <tr colspan="2">
+                        <td>
+                            @Html.LabelFor(model => model.BikeSpecifications)
+                            @Model.BikeSpecifications
+                        </td>
+                    </tr>
+
+                    <tr colspan="2">
+                        <td>
+                            @Html.LabelFor(model => model.Hobbies)
+                            @Model.Hobbies
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+}
+
+
+@{
+    Html.RenderPartial("ProfilePost", new Post());
+}
+
+@foreach (var post in ViewBag.Posts)
+{
+    @PostHelper(post)
+}
+
+
+@helper PostHelper(Post post)
+{
+    <div class="panel panel-info tiny-panel">
+
+        <div class="panel panel-heading">
+
+            <a href="@Url.Action("Index", "Profile", new { id = post.Author.Id})">
+                @if (post.Author.PhotoUrl != null)
+                {
+                    <img class="avatar" src="@Url.Content(post.Author.PhotoUrl)" height="15" />
+                }
+                @post.Author.Login
+            </a>
+
+            @post.Date.ToString("dd.MM.yyyy в HH:mm")
+
+        </div>
+
+        <div class="panel-body">
+
+            <p>@Url.Content(post.Text)</p>
+
+            @if (post.PhotoUrl != null)
+            {
+                <div>
+                    <img width="100" class="post-image" src="@Url.Content(post.PhotoUrl)" />
+                </div>
+            }
+
+        </div>
+
+    </div>
+}

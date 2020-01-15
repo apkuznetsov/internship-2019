@@ -1,0 +1,96 @@
+﻿@model RealBlog.Models.Post
+@using RealBlog.Models
+
+@{
+    ViewBag.Title = "Лента новостей";
+}
+
+<h2>лента новостей</h2>
+
+@if (Session["UserNick"] != null)
+{
+    <div class="panel panel-info tiny-panel">
+
+        <div class="panel panel-heading">
+            Добавление нового поста
+        </div>
+
+        <div class="panel-body">
+            @using (Html.BeginForm("AddPost", "Feed", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <form>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Text)
+                        @Html.TextAreaFor(model => model.Text, 10, 100, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PhotoUrl)
+                        <input name="imageData" type="file" accept="image/x-png,image/gif,image/jpeg" />
+                        @Html.ValidationMessageFor(model => model.PhotoUrl, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+
+                    <button type="submit" class="btn button-gray btn-block">Добавить</button>
+
+                </form>
+            }
+        </div>
+
+    </div>
+}
+
+
+@if (ViewBag.Posts.Count == 0)
+{
+    <h1>Постов нет</h1>
+}
+else
+{
+    foreach (var post in ViewBag.Posts)
+    {
+        @PostHelper(post)
+    }
+}
+
+
+@helper PostHelper(Post post)
+{
+    <div class="panel panel-info tiny-panel">
+
+        <div class="panel panel-heading">
+
+            <a href="@Url.Action("Index", "Profile", new { id = post.Author.Id})">
+
+                @if (post.Author.PhotoUrl != null)
+                {
+                    <img class="avatar" src="@Url.Content(post.Author.PhotoUrl)" height="15" />
+                }
+
+                @post.Author.Login
+
+            </a>
+
+            @post.Date.ToString("dd.MM.yyyy в HH:mm")
+
+        </div>
+
+        <div class="panel-body">
+
+            <p>@Url.Content(post.Text)</p>
+
+            @if (post.PhotoUrl != null)
+            {
+                <div>
+                    <img src="@Url.Content(post.PhotoUrl)" class="post-image" width="100" />
+                </div>
+            }
+
+        </div>
+    </div>
+}

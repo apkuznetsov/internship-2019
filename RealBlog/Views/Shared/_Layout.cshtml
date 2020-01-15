@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top grey-bar">
+
+        <div class="container">
+
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="/Feed"><img src="~/Content/Other/logo.png"></a>
+
+            </div>
+
+            @using (Html.BeginForm("Search", "Feed", FormMethod.Post, new { @class = "navbar-form navbar-left" }))
+            {
+                <form class="navbar-nav pull-right">
+                    <input type="text" name="SearchString" placeholder="Поиск..." class="search-field" />
+                </form>
+            }
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav pull-right">
+                    @if (Session["UserNick"] != null)
+                    {
+                        <li>@Html.ActionLink(Session["UserNick"].ToString(), "Index", "Profile", new { id = Session["UserId"] }, null)</li>
+                        <li>
+                            <a href="@Url.Action("Logout", "Home")">
+                                <img src="@Url.Content("~/Content/Other/exit.png")" width="25" height="25" />
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("войти", "Index", "Home")</li>
+                        <li>@Html.ActionLink("регистрация", "Index", "Register")</li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>
